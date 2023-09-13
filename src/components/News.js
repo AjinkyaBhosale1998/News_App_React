@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import NewsItem from "./NewsItem.js";
+import Spinner from "./Spinner.js"
 
 export class News extends Component {
   
@@ -20,7 +21,9 @@ export class News extends Component {
       let data = await fetch(url);
       let parsedData= await data.json();
       console.log(parsedData);
-      this.setState({articles: parsedData.articles})
+      this.setState({articles: parsedData.articles,
+      totalResults: parsedData.totalResults,
+      loading: false })
     }
 
     handlPrevclick = async () => {
@@ -47,8 +50,8 @@ export class News extends Component {
 
     return (
       <div className="container my-4">
-        <h1>Bharat Times 🇮🇳 - Top Headlines</h1>
-
+        <h1 className="text-center">Bharat Times 🇮🇳 - Top Headlines</h1>
+          <Spinner/>
         <div className="row">
             {this.state.articles.map((element) => {
                 return <div className="col-md-4" key={element.url}>
